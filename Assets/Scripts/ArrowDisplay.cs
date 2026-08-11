@@ -26,6 +26,8 @@ public class ArrowDisplay : MonoBehaviour
             Image image =
                 arrow.GetComponent<Image>();
 
+            //Debug.Log(image);
+
             switch(dir)
             {
                 case Direction.Up:

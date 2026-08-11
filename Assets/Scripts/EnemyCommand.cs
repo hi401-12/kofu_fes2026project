@@ -6,6 +6,8 @@ public class EnemyCommand : MonoBehaviour
 {
     public TMP_Text commandText;
 
+    public ArrowDisplay arrowDisplay;
+
     public List<Direction> commands = new();
 
     private int currentIndex = 0;
@@ -16,8 +18,14 @@ public class EnemyCommand : MonoBehaviour
 
         //commandText.text = GetCommandText();
 
+        arrowDisplay = GetComponentInChildren<ArrowDisplay>();
 
-        Debug.Log(string.Join(",", commands));
+        if(arrowDisplay != null){
+            arrowDisplay.DisplayCommands(commands);
+        }
+
+
+        //Debug.Log(string.Join(",", commands));
     }
 
     void GenerateCommand()
