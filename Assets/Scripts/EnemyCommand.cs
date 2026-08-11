@@ -1,18 +1,11 @@
 using System.Collections.Generic;
 using UnityEngine;
-<<<<<<< HEAD:Assets/Scripts/EnemyCommand.cs
 using TMPro;
 
 public class EnemyCommand : MonoBehaviour
 {
     public TMP_Text commandText;
 
-=======
-using TMpro;
-
-public class EnemyCommand : MonoBehaviour
-{
->>>>>>> 0419aebd6ebb1a5387e998fba831ed7ab88deec2:Assets/Script/EnemyCommand.cs
     public List<Direction> commands = new();
 
     private int currentIndex = 0;
@@ -21,12 +14,9 @@ public class EnemyCommand : MonoBehaviour
     {
         GenerateCommand();
 
-<<<<<<< HEAD:Assets/Scripts/EnemyCommand.cs
         //commandText.text = GetCommandText();
 
 
-=======
->>>>>>> 0419aebd6ebb1a5387e998fba831ed7ab88deec2:Assets/Script/EnemyCommand.cs
         Debug.Log(string.Join(",", commands));
     }
 
