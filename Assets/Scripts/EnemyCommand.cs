@@ -6,11 +6,11 @@ public class EnemyCommand : MonoBehaviour
 {
     public TMP_Text commandText;
 
-    public ArrowDisplay arrowDisplay;
-
     public List<Direction> commands = new();
 
     private int currentIndex = 0;
+
+    private ArrowDisplay arrowDisplay;
 
     private void Start()
     {
@@ -30,7 +30,7 @@ public class EnemyCommand : MonoBehaviour
 
     void GenerateCommand()
     {
-        int length = 3;
+        int length = 3 + (ScoreManager.Instance.score / 60);
 
         for(int i = 0; i < length; i++)
         {
@@ -42,18 +42,26 @@ public class EnemyCommand : MonoBehaviour
 
     public void ProcessInput(Direction input)
     {
-        if(currentIndex >= commands.Count)
-            return;
 
         if(input == commands[currentIndex])
         {
             currentIndex++;
 
+            arrowDisplay.UpdateDisplay(
+                commands,
+                currentIndex
+            );
+
             if(currentIndex >= commands.Count)
             {
+                ScoreManager.Instance.AddScore(1);
+                
                 Destroy(gameObject);
             }
         }
+
+        if(currentIndex >= commands.Count)
+            return;
     }
 
     public string GetCommandText()

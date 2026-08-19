@@ -29,9 +29,11 @@ public class Enemy : MonoBehaviour
             PlayerHealth health =
                 other.GetComponent<PlayerHealth>();
 
-            health.hp--;
-
+            if(health != null)
+            {
+                health.TakeDamage(1);
+            }
             Destroy(gameObject);
-        }
+        }  
     }
 }

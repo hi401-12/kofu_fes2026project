@@ -11,9 +11,21 @@ public class EnemySpawner : MonoBehaviour
     {
         timer += Time.deltaTime;
 
+        float currentInterval =
+            Mathf.Max(
+                    0.5f,
+                    3f -
+                    (ScoreManager.Instance.score / 20) * 0.5f
+            );
         if(timer >= spawnInterval)
         {
-            SpawnEnemy();
+            int spawnCount =
+                        1 + (ScoreManager.Instance.score / 60);
+
+            for(int i = 0; i < spawnCount; i++)
+            {
+                SpawnEnemy();
+            }
             timer = 0f;
         }
     }
