@@ -12,6 +12,8 @@ public class EnemyCommand : MonoBehaviour
 
     private ArrowDisplay arrowDisplay;
 
+    public GameObject hitEffect;
+
     private void Start()
     {
         GenerateCommand();
@@ -55,7 +57,7 @@ public class EnemyCommand : MonoBehaviour
             if(currentIndex >= commands.Count)
             {
                 ScoreManager.Instance.AddScore(1);
-                
+                Instantiate(hitEffect, transform.position, Quaternion.identity);
                 Destroy(gameObject);
             }
         }

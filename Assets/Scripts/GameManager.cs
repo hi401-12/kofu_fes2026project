@@ -27,4 +27,11 @@ public class GameManager : MonoBehaviour
             SceneManager.GetActiveScene().buildIndex
         );
     }
+
+    public void GoHome()
+    {
+        Time.timeScale = 1f;
+
+        SceneManager.LoadScene("Title");
+    }
 }
