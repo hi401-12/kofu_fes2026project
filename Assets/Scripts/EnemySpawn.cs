@@ -1,31 +1,47 @@
 using UnityEngine;
+using System.Collections;
 
 public class EnemySpawner : MonoBehaviour
 {
     public GameObject enemyPrefab;
+    public GameObject midBossPrefab;
+    public GameObject warningText;
+
     public float spawnInterval = 3f;
 
     private float timer;
+    private bool midBossSpawned = false;
+    public static EnemySpawner Instance;
+    public bool bossBattle = false;
 
     private void Update()
     {
         timer += Time.deltaTime;
 
-        float currentInterval =
-            Mathf.Max(
-                    0.5f,
-                    3f -
-                    (ScoreManager.Instance.score / 20) * 0.5f
+        // スコア60で中ボス出現
+        if (
+            ScoreManager.Instance.score >= 60 &&
+            !midBossSpawned
+        )
+        {
+            midBossSpawned = true;
+
+            StartCoroutine(
+                SpawnMidBossSequence()
             );
-        if(timer >= spawnInterval)
+        }
+
+        // 雑魚敵スポーン
+        if (!bossBattle && timer >= spawnInterval)
         {
             int spawnCount =
-                        1 + (ScoreManager.Instance.score / 60);
+                1 + (ScoreManager.Instance.score / 60);
 
-            for(int i = 0; i < spawnCount; i++)
+            for (int i = 0; i < spawnCount; i++)
             {
                 SpawnEnemy();
             }
+
             timer = 0f;
         }
     }
@@ -41,13 +57,42 @@ public class EnemySpawner : MonoBehaviour
         );
     }
 
+    private void SpawnMidBoss()
+    {
+        bossBattle = true;
+
+        //Debug.Log("Boss Spawned");
+
+        Instantiate(
+            midBossPrefab,
+            new Vector2(5, -4),
+            Quaternion.identity
+        );
+    }
+
+    private void Awake()
+    {
+        Instance = this;
+    }
+
+    IEnumerator SpawnMidBossSequence()
+    {
+        warningText.SetActive(true);
+
+        yield return new WaitForSeconds(2f);
+
+        warningText.SetActive(false);
+
+        SpawnMidBoss();
+    }
+
     private Vector2 GetRandomSpawnPosition()
     {
         int side = Random.Range(0, 4);
 
         float distance = 8f;
 
-        switch(side)
+        switch (side)
         {
             case 0:
                 return new Vector2(

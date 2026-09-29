@@ -1,28 +1,22 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class InputManager : MonoBehaviour
 {
-    private void Update()
+    public void OnMove(InputAction.CallbackContext context)
     {
-        if(Input.GetKeyDown(KeyCode.UpArrow))
-        {
-            SendInput(Direction.Up);
-        }
+    if (!context.performed) return;
 
-        if(Input.GetKeyDown(KeyCode.DownArrow))
-        {
-            SendInput(Direction.Down);
-        }
+    Vector2 input = context.ReadValue<Vector2>();
 
-        if(Input.GetKeyDown(KeyCode.LeftArrow))
-        {
-            SendInput(Direction.Left);
-        }
-
-        if(Input.GetKeyDown(KeyCode.RightArrow))
-        {
-            SendInput(Direction.Right);
-        }
+    if (input.y > 0.5f)
+        SendInput(Direction.Up);
+    else if (input.y < -0.5f)
+        SendInput(Direction.Down);
+    else if (input.x > 0.5f)
+        SendInput(Direction.Right);
+    else if (input.x < -0.5f)
+        SendInput(Direction.Left);
     }
 
     void SendInput(Direction dir)
@@ -32,7 +26,7 @@ public class InputManager : MonoBehaviour
                 FindObjectsSortMode.None
             );
 
-        foreach(var enemy in enemies)
+        foreach (var enemy in enemies)
         {
             enemy.ProcessInput(dir);
         }

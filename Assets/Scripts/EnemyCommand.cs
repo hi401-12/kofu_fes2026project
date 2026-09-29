@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.InputSystem;
+using UnityEditor;
 
 public class EnemyCommand : MonoBehaviour
 {
@@ -32,6 +34,8 @@ public class EnemyCommand : MonoBehaviour
 
     void GenerateCommand()
     {
+        commands.Clear();
+
         int length = 3 + (ScoreManager.Instance.score / 60);
 
         for(int i = 0; i < length; i++)
@@ -44,6 +48,8 @@ public class EnemyCommand : MonoBehaviour
 
     public void ProcessInput(Direction input)
     {
+        if(currentIndex >= commands.Count)
+            return;
 
         if(input == commands[currentIndex])
         {
@@ -53,11 +59,32 @@ public class EnemyCommand : MonoBehaviour
                 commands,
                 currentIndex
             );
-
             if(currentIndex >= commands.Count)
             {
                 ScoreManager.Instance.AddScore(1);
-                Instantiate(hitEffect, transform.position, Quaternion.identity);
+
+                Instantiate(
+                    hitEffect,
+                    transform.position,
+                    Quaternion.identity
+                );
+
+                MidBoss boss =
+                 GetComponent<MidBoss>();
+
+                if(boss != null)
+                {
+                    boss.TakeDamage();
+
+                    GenerateCommand();
+
+                    currentIndex = 0;
+
+                    arrowDisplay.DisplayCommands(commands);
+
+                    return;
+                }
+
                 Destroy(gameObject);
             }
         }
@@ -66,6 +93,22 @@ public class EnemyCommand : MonoBehaviour
             return;
     }
 
+    /*Vector2 command;
+    void GetCommand(InputAction.CallbackContext context)
+    {
+       command = context.ReadValue<Vector2>();  
+
+       if(context.started)
+        {
+            MoveGrid(command);
+        }      
+    }
+
+    void MoveGrid(Vector2 command)
+    {
+        Debug.Log(command);
+    }
+*/
     public string GetCommandText()
     {
         string result = "";
@@ -91,6 +134,8 @@ public class EnemyCommand : MonoBehaviour
                 break;
             }
         }
+
+        
 
         return result;
     }
