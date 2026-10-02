@@ -36,7 +36,18 @@ public class EnemyCommand : MonoBehaviour
     {
         commands.Clear();
 
-        int length = 3 + (ScoreManager.Instance.score / 60);
+        MidBoss boss = GetComponent<MidBoss>();
+
+        int length;
+
+        if(boss != null)
+        {
+            length = Random.Range(6, 9);
+        }
+        else
+        {
+            length = 3 + (ScoreManager.Instance.score / 60);
+        }
 
         for(int i = 0; i < length; i++)
         {

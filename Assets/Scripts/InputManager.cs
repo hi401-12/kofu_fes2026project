@@ -3,20 +3,18 @@ using UnityEngine.InputSystem;
 
 public class InputManager : MonoBehaviour
 {
-    public void OnMove(InputAction.CallbackContext context)
+    public void OnMove(InputValue value)
     {
-    if (!context.performed) return;
+        Vector2 input = value.Get<Vector2>();
 
-    Vector2 input = context.ReadValue<Vector2>();
-
-    if (input.y > 0.5f)
-        SendInput(Direction.Up);
-    else if (input.y < -0.5f)
-        SendInput(Direction.Down);
-    else if (input.x > 0.5f)
-        SendInput(Direction.Right);
-    else if (input.x < -0.5f)
-        SendInput(Direction.Left);
+        if (input.y > 0.5f)
+            SendInput(Direction.Up);
+        else if (input.y < -0.5f)
+            SendInput(Direction.Down);
+        else if (input.x > 0.5f)
+            SendInput(Direction.Right);
+        else if (input.x < -0.5f)
+            SendInput(Direction.Left);
     }
 
     void SendInput(Direction dir)

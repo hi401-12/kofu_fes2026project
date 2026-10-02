@@ -7,6 +7,8 @@ public class GameManager : MonoBehaviour
 
     public GameObject gameOverPanel;
 
+    public GameObject clearPanel;
+
     private void Awake()
     {
         Instance = this;
@@ -17,6 +19,13 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 0f;
 
         gameOverPanel.SetActive(true);
+    }
+
+    public void Clear()
+    {
+        Time.timeScale = 0f;
+
+        clearPanel.SetActive(true);
     }
 
     public void Retry()

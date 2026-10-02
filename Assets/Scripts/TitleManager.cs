@@ -7,4 +7,10 @@ public class TitleManager : MonoBehaviour
     {
         SceneManager.LoadScene("Game");
     }
+
+    public void QuitGame()
+    {
+        Debug.Log("Game Quit");
+        Application.Quit();
+    }
 }
