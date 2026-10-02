@@ -81,9 +81,12 @@ public class ma : MonoBehaviour
 
         Button button = menuItems[selected].GetComponent<Button>();
 
+        //Debug.Log("selected");
+
         if (button != null)
         {
             button.onClick.Invoke();
+            //Debug.Log("invoked");
         }
     }
 
